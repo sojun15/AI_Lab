@@ -1,6 +1,7 @@
 {
-    "files.associations": {
-        "cstdlib": "cpp",
-        "iostream": "cpp"
-    }
+  "files.associations": {
+    "cstdlib": "cpp",
+    "iostream": "cpp",
+    "ostream": "cpp"
+  }
 }
