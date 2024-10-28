@@ -37,6 +37,7 @@ int main()
     int randomx = 1 + (rand() % 3);
     int randomy = 1 + (rand() % 5);
     int suck = 0, move = 0, extra_move = 0;
+
     if (ar[randomx][randomy] != 9)
     {
         if (ar[randomx][randomy] == 1)
