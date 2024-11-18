@@ -1,9 +1,6 @@
 import numpy as np
 import random as rand
 
-success = 0
-error = 0
-
 counts = np.zeros((5,7))
 
 # here is created my environment 
@@ -43,13 +40,15 @@ def real_environment():
         numbers[x][y] = 1
     return numbers
 
-# it is used for checking, are we predict correct environment or not 
-def check_environment(new_env,tempi,tempj):
+# it is used for increasing our predicted environment correctly otherwise decreasing
+def check_environment(new_env,tempi,tempj,prob):
     global success, error
-    if new_env[tempi][tempj]==0:
-        error += 1
+    if new_env[tempi][tempj]==1:
+        prob[tempi][tempj] += 0.05
     else:
-        success += 1
+        prob[tempi][tempj] -= 0.05
+    
+    return prob
 
 if __name__=="__main__":
 
@@ -63,13 +62,14 @@ if __name__=="__main__":
 
     # it is used for creating real environment 
     new_environment = real_environment()
+    print('New environment:',1)
     print(new_environment)
-    max_value = probability_array[0][0]
-    index1 = 0
-    index2 = 0
 
     # each iteration it will determine the maximum probability value
     for cnt in range(10):
+        max_value = probability_array[0][0]
+        index1 = 0
+        index2 = 0
         for i in range(5):
             for j in range(7):
                 if probability_array[i][j] > max_value:
@@ -77,8 +77,13 @@ if __name__=="__main__":
                     index1 = i
                     index2 = j
 
-        check_environment(new_environment,index1,index2)
-        max_value = 0
-        probability_array[index1][index2] = 0
-    print('Total success:',success)
-    print('Total error:',error)
+        probability_array = check_environment(new_environment,index1,index2,probability_array)
+        print('Probability:',cnt+1)
+        print(probability_array)
+
+        new_environment = real_environment()
+        
+        if cnt==9:
+            break
+        print('New environment:',cnt+2)
+        print(new_environment)
